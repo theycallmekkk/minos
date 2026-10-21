@@ -1996,5 +1996,38 @@
             });
         });
     </script>
+        <script>
+        // ================= 防扒代码（不影响看图和保存） =================
+
+        // 1. 拦截键盘快捷键（F12 开发者工具、Ctrl+U 查看源码、Ctrl+S 保存网页）
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 2. 拦截右键菜单（但放行图片的右键操作）
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        // 3. 拦截直接拖拽网页上的元素
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+    </script>
 </body>
 </html>
