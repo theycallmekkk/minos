@@ -20,14 +20,97 @@
         }
         .hidden { opacity: 0; pointer-events: none; z-index: -1; }
 
+        /* ====== 黑红科幻底图 (替代 start.jpg) ====== */
         #page-start {
-            background: url('IMG/start.jpg') no-repeat center center;
-            background-size: cover; z-index: 10;
+            background: radial-gradient(circle at center, #1a0000 0%, #050000 70%, #000000 100%);
+            z-index: 10;
         }
+        /* 添加一些红色的光晕和网格纹理，看起来更高级 */
+        #page-start::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ====== 开头标题 ====== */
+        .start-title {
+            position: absolute; top: 25%; left: 50%; transform: translateX(-50%);
+            color: #8b0000; font-size: 54px; letter-spacing: 15px; font-weight: 300;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.2);
+            z-index: 2; white-space: nowrap;
+            animation: titlePulse 3s infinite alternate;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes titlePulse {
+            0% { opacity: 0.8; text-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+            100% { opacity: 1; text-shadow: 0 0 40px rgba(255, 0, 0, 0.9); }
+        }
+
+        /* ====== 炫酷的登录按钮 (替代透明触发区) ====== */
+        #btn-login-trigger {
+            position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);
+            padding: 15px 50px;
+            font-size: 24px; font-weight: bold; color: #ff3333;
+            letter-spacing: 8px; cursor: pointer;
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8b0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5), inset 0 0 15px rgba(139, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            z-index: 2;
+            overflow: hidden;
+        }
+        /* 按钮的高光扫射效果 */
+        #btn-login-trigger::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.4), transparent);
+            transition: all 0.4s ease;
+        }
+        #btn-login-trigger:hover {
+            color: #fff; background: rgba(139, 0, 0, 0.6);
+            border-color: #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), inset 0 0 20px rgba(255, 0, 0, 0.8);
+            transform: translateX(-50%) scale(1.05);
+        }
+        #btn-login-trigger:hover::after { left: 100%; }
+        
+        /* 新增：隐藏状态（用于打开弹窗时隐藏按钮和标题） */
+        .fade-out {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        /* ====== 加载页 (替代 loading.jpg) ====== */
         #page-loading {
-            background: url('IMG/loading.jpg') no-repeat center center;
-            background-size: cover; z-index: 5;
+            background: #050000;
+            z-index: 5;
+            flex-direction: column;
+            gap: 30px;
         }
+        /* 炫酷的六边形/圆环加载动画 */
+        .loading-spinner {
+            width: 80px; height: 80px;
+            border: 4px solid rgba(139, 0, 0, 0.3);
+            border-top-color: #ff0000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .loading-text {
+            color: #8b0000; font-size: 18px; letter-spacing: 5px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; text-shadow: 0 0 10px #ff0000; }
+        }
+
         #page-transition {
             background: #050000; z-index: 6; flex-direction: column;
         }
@@ -107,7 +190,6 @@
             margin-bottom: 30px; text-align: center; flex-shrink: 0;
         }
 
-        /* 单张大图展示 */
         .intro-single {
             width: 100%; max-width: 1000px;
             display: flex; justify-content: center; align-items: center;
@@ -127,7 +209,6 @@
             transform: scale(1.01);
         }
 
-        /* 档案文字区域 */
         .char-content-wrapper {
             width: 100%; max-width: 1100px;
             background: rgba(0, 0, 0, 0.78);
@@ -157,7 +238,6 @@
         .char-content .label { color: #8b0000; font-weight: bold; display: inline-block; min-width: 100px; }
         .char-content hr { border: none; border-top: 1px solid #331111; margin: 20px 0; }
 
-
         /* ====== 相关图片页（画廊） ====== */
         #page-bottle {
             background: #050000; z-index: 7; flex-direction: column;
@@ -173,7 +253,6 @@
             margin-bottom: 40px; text-align: center;
         }
         
-        /* 分类列表 */
         .category-list {
             display: flex; flex-direction: column; gap: 16px;
             width: 90%; max-width: 800px;
@@ -193,7 +272,6 @@
             color: #ffdddd; transform: scale(1.02);
         }
 
-        /* 图片网格 */
         .gallery-grid {
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -722,17 +800,14 @@
             font-size: 13px; color: #888;
         }
         #invasion-modal p:last-child { color: #666; }
-
-        #btn-login-trigger {
-            position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%);
-            width: 300px; height: 50px; cursor: pointer;
-        }
     </style>
 </head>
 <body>
 
+    <!-- 登录起始页 -->
     <div id="page-start" class="screen">
-        <div id="btn-login-trigger"></div>
+        <div class="start-title" id="start-title">米诺斯危险管理局</div>
+        <div id="btn-login-trigger">登 录 管 理 局</div>
     </div>
 
     <div class="modal" id="login-modal">
@@ -750,7 +825,11 @@
         <p>系统已锁定，请刷新页面重试。</p>
     </div>
 
-    <div id="page-loading" class="screen hidden"></div>
+    <!-- 加载页 -->
+    <div id="page-loading" class="screen hidden">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">SYSTEM LOADING...</div>
+    </div>
 
     <div id="page-transition" class="screen hidden">
         <h1>米诺斯危机管理局</h1>
@@ -780,7 +859,7 @@
         <div class="char-header">角 色 介 绍</div>
         <div class="char-sub">MBCC-S-005 · 奥古斯特</div>
         
-        <!-- 修改为单张大图展示 -->
+        <!-- 单张大图展示 -->
         <div class="intro-single">
             <img src="IMG/角色人设/动图.GIF" alt="角色动图" onclick="openImageModal(this.src)">
         </div>
@@ -1100,6 +1179,7 @@
         const pageCharacter = document.getElementById('page-character');
 
         const btnLoginTrigger = document.getElementById('btn-login-trigger');
+        const startTitle = document.getElementById('start-title');
         const loginModal = document.getElementById('login-modal');
         const invasionModal = document.getElementById('invasion-modal');
         const submitBtn = document.getElementById('submit-login');
@@ -1395,7 +1475,11 @@
 
         // ================= 1. 登录逻辑 =================
         btnLoginTrigger.addEventListener('click', () => {
-            pageStart.style.backgroundImage = "url('IMG/start2.jpg')";
+            // 隐藏按钮和标题
+            btnLoginTrigger.classList.add('fade-out');
+            startTitle.classList.add('fade-out');
+            
+            // 显示登录弹窗
             loginModal.classList.add('active');
             usernameInput.focus();
         });
@@ -1417,7 +1501,6 @@
                     }, 3000);
                 }, 3000);
             } else {
-                pageStart.style.backgroundImage = "url('IMG/start2.jpg')";
                 errorCount++;
                 if (errorCount >= 3) {
                     loginModal.classList.remove('active');
@@ -1432,6 +1515,15 @@
 
         passwordInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') submitBtn.click();
+        });
+
+        // 点击弹窗外区域关闭弹窗时，恢复显示标题和按钮
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+                btnLoginTrigger.classList.remove('fade-out');
+                startTitle.classList.remove('fade-out');
+            }
         });
 
         // ================= 2. 主界面导航 =================
@@ -1604,8 +1696,8 @@
 
         // ================= 5. OST 音乐 =================
         const songFiles = [
-            'IMG/残锋.m4a', 'IMG/铁血烬途.m4a', 'IMG/断头台.m4a',
-            'IMG/BR - 003.m4a', 'IMG/亡者回声.m4a', 'IMG/我曾在....m4a'
+            'IMG/残锋.mp3', 'IMG/铁血烬途.mp3', 'IMG/断头台.mp3',
+            'IMG/BR - 003.mp3', 'IMG/亡者回声.mp3', 'IMG/我曾在....mp3'
         ];
         for (let i = 0; i < 6; i++) {
             document.getElementById('song-' + (i + 1)).addEventListener('click', () => {
@@ -1851,8 +1943,6 @@
                 <p>请于体验后支持正版游戏，共同维护良好的创作环境。</p>
                 <p>无期迷途官方网站：https://wqmt.aisnogames.com/</p>
                 <p>无期迷途官方微博：https://weibo.com/u/7484534569/</p>
-                <p>无期迷途官方小红书：https://xhslink.cn/o/6N7ULsuydGJ/</p>
-                <p>无期迷途官方抖音：https://v.douyin.com/2gtMQZp10J4/ 1@9.com :9pm</p>
             `,
             'infringement': `
                 <p><strong>侵权处理声明</strong></p>
@@ -1875,8 +1965,8 @@
             `,
             'other': `
                 <p><strong>特别鸣谢</strong></p>
-                <p>本网站内暗涌、碎金盛宴、残锋的剧情都是由 b站0u0初心Gamer 局长提供</p>
-                <p>本网站内谷子图鉴都是由 小红书挽. 局长提供</p>
+                <p>本网站内暗涌、碎金盛宴、残锋的剧情都是由 0u0初心Gamer 局长提供</p>
+                <p>本网站内谷子图鉴都是由 挽. 局长提供</p>
                 <p>非常感谢！</p>
                 <p>因受到文件体积限制，原声ost的格式均不为flac格式且在内所有视频都以B站嵌入的方式保存。</p>
                 <p>在这里先给各位局长说声抱歉!</p>
